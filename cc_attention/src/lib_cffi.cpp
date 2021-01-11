@@ -7,7 +7,7 @@
 extern THCState *state;
 
 int ca_forward_cuda(const at::Tensor& t, const at::Tensor& f, at::Tensor& weight) {
-  cudaStream_t stream = THCState_getCurrentStream(state);
+  cudaStream_t stream = at::cuda::getCurrentCUDAStream();
   int N, C, H, W;
   N = t.size(0); C = t.size(1); H = t.size(2); W = t.size(3);
   float * t_data = t.data<float>();
@@ -18,7 +18,7 @@ int ca_forward_cuda(const at::Tensor& t, const at::Tensor& f, at::Tensor& weight
 
 int ca_backward_cuda(const at::Tensor& dw, const at::Tensor& t, const at::Tensor& f, at::Tensor& dt, at::Tensor& df) {
 
-  cudaStream_t stream = THCState_getCurrentStream(state);
+  cudaStream_t stream = at::cuda::getCurrentCUDAStream();
   int N, C, H, W;
   N = t.size(0); C = t.size(1); H = t.size(2); W = t.size(3);
   float * t_data = t.data<float>();
@@ -30,7 +30,7 @@ int ca_backward_cuda(const at::Tensor& dw, const at::Tensor& t, const at::Tensor
 }
 
 int ca_map_forward_cuda(const at::Tensor& weight, const at::Tensor& g, at::Tensor& out) {
-  cudaStream_t stream = THCState_getCurrentStream(state);
+  cudaStream_t stream = at::cuda::getCurrentCUDAStream();
 
   int N, C, H, W;
   N = g.size(0); C = g.size(1); H = g.size(2); W = g.size(3);
@@ -44,7 +44,7 @@ int ca_map_forward_cuda(const at::Tensor& weight, const at::Tensor& g, at::Tenso
 
 int ca_map_backward_cuda(const at::Tensor& dout, const at::Tensor& weight, const at::Tensor& g,
                      at::Tensor& dw, at::Tensor& dg) {
-  cudaStream_t stream = THCState_getCurrentStream(state);
+  cudaStream_t stream = at::cuda::getCurrentCUDAStream();
 
   int N, C, H, W;
   N = dout.size(0); C = dout.size(1); H = dout.size(2); W = dout.size(3);
