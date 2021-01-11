@@ -13,7 +13,7 @@ setup(name="rcca2",
           CUDAExtension(
               'rcca', 
               ['src/lib_cffi.cpp', 'src/ca.cu'],
-              extra_compile_args = ["-std=c++11"]
+              extra_compile_args = ["-std=c++14"]
               ), 
           ],
       cmdclass={'build_ext': BuildExtension})
